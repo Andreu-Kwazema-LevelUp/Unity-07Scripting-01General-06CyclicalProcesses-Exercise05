@@ -1,11 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthBehavior : MonoBehaviour
 {
-    public delegate void HealthChangeHandler(float currentHealth);
-
-    public event HealthChangeHandler HealthChange = delegate { };
+    public UnityEvent<float> HealthChangeEvent;
 
     [SerializeField]
     private float _health;
@@ -39,9 +38,9 @@ public class HealthBehavior : MonoBehaviour
 
     private void OnHealthChange(float health)
     {
-        if (HealthChange != null)
+        if (HealthChangeEvent != null)
         {
-            HealthChange.Invoke(health);
+            HealthChangeEvent?.Invoke(health);
         }
     }
 }
